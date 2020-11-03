@@ -1,0 +1,21 @@
+.input {
+  display: flex;
+  flex-direction: column;
+
+  &__control {
+    line-height: 1.4;
+    box-sizing: border-box;
+    font-size: 1rem;
+    padding: 3px;
+  }
+  &__label {
+    margin-bottom: .25rem;
+    cursor: pointer;
+    user-select: none;
+    &_required {
+      &::after {
+        content: '*';
+      }
+    }
+  }
+}
