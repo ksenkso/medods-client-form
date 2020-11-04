@@ -4,101 +4,123 @@
       <h1>Добавление клиента</h1>
     </div>
     <form action="#" @submit.prevent="onSubmit" novalidate>
-      <h2>Пациент</h2>
-      <div class="input-group input-group_fio">
-        <FormInput required v-model="$v.person.lastName.$model" name="last-name" id="last-name"
-                   label="Фамилия">
-          <template slot="errors">
-            <div class="error">Это поле обязательно</div>
-          </template>
-        </FormInput>
-        <FormInput required v-model="$v.person.firstName.$model" name="first-name" id="first-name"
-                   label="Имя">
-          <template slot="errors">
-            <div class="error">Это поле обязательно</div>
-          </template>
-        </FormInput>
-        <FormInput v-model="$v.person.patronymic.$model" name="patronymic" id="patronymic" label="Отчество"></FormInput>
-      </div>
-      <div class="input-group">
-        <FormInput
-            required
-            v-model="$v.person.dateOfBirth.$model"
-            name="date-of-birth"
-            type="date" id="date-of-birth"
-            label="Дата рождения"
-            class="input_birth"
-        >
-          <template slot="errors">
-            <div class="error">Это поле обязательно</div>
-          </template>
-        </FormInput>
-        <div class="input-group input-group_phone">
-          <FormInput required v-model="$v.person.phone.$model" name="phone" type="tel" id="phone" label="Телефон" class="input_phone">
-            <template slot="errors">
-              <div class="error">Это поле обязательно</div>
-              <div class="error">Телефон должен быть в формате 7XXXXXXXXXX</div>
-            </template>
-          </FormInput>
-          <Checkbox id="no-sms" name="no-sms" v-model="$v.noSMS.$model" value="no-sms"
-                     label="Не отправлять СМС"></Checkbox>
-        </div>
-      </div>
-      <h3>Пол</h3>
-      <div class="input-group input-group_row input-group_condensed">
-        <RadioButton v-model="$v.person.sex.$model" value="male" name="sex" id="sex-male" label="Мужской"></RadioButton>
-        <RadioButton v-model="$v.person.sex.$model" value="female" name="sex" id="sex-female" label="Женский"></RadioButton>
-      </div>
-      <h2>Адрес</h2>
-      <p class="hint">Укажите хотя бы город</p>
-      <div class="input-group input-group_address">
+      <div class="row">
         <div class="col">
-          <FormInput v-model="$v.address.index.$model" name="index" id="index" label="Индекс"></FormInput>
-          <FormInput v-model="$v.address.country.$model" name="country" id="country" label="Страна"></FormInput>
-          <FormInput v-model="$v.address.district.$model" name="district" id="district" label="Область"></FormInput>
-        </div>
-        <div class="col">
-          <FormInput required v-model="$v.address.city.$model" name="city" id="city" label="Город">
-            <template slot="errors">Это поле обязательно</template>
-          </FormInput>
-          <FormInput v-model="$v.address.street.$model" name="street" id="street" label="Улица"></FormInput>
-          <FormInput v-model="$v.address.house.$model" name="house" id="house" label="Дом"></FormInput>
-        </div>
-      </div>
-      <h2>Документ, удостоверяющий личность</h2>
-      <div class="input-group input-group_document">
-        <Select
-            required
-            v-model="$v.document.type.$model"
-            label="Тип документа"
-            name="doc-type"
-            id="doc-type"
-            :options="documentTypes">
-          <template slot="errors">Это поле обязательно</template>
-        </Select>
+          <h2>Пациент</h2>
+          <div class="input-group">
+            <FormInput
+                required
+                :value="$v.person.lastName.$model"
+                @change="$v.person.lastName.$model = $event.trim()"
+                name="last-name"
+                id="last-name"
+                label="Фамилия">
+              <template slot="errors">
+                <div class="error" v-if="$v.person.lastName.$dirty && !$v.person.lastName.required">Это поле обязательно</div>
+              </template>
+            </FormInput>
+            <FormInput
+                required
+                :value="$v.person.firstName.$model"
+                @change="$v.person.firstName.$model = $event.trim()"
+                name="first-name" id="first-name"
+                label="Имя">
+              <template slot="errors">
+                <div class="error" v-if="$v.person.firstName.$dirty && !$v.person.firstName.required">Это поле обязательно</div>
+              </template>
+            </FormInput>
+            <FormInput v-model.trim="$v.person.patronymic.$model" name="patronymic" id="patronymic" label="Отчество"></FormInput>
+            <FormInput
+                required
+                v-model="$v.person.dateOfBirth.$model"
+                name="date-of-birth"
+                type="date" id="date-of-birth"
+                label="Дата рождения"
+                class="input_birth"
+            ><template slot="errors">
+                <div class="error" v-if="$v.person.dateOfBirth.$dirty && !$v.person.dateOfBirth.required">Это поле обязательно</div>
+              </template>
+            </FormInput>
+            <FormInput required v-model.trim="$v.person.phone.$model" name="phone" type="tel" id="phone" label="Телефон" class="input_phone">
+              <template slot="errors">
+                <div class="error" v-if="$v.person.phone.$dirty && !$v.person.phone.required">Это поле обязательно</div>
+                <div class="error" v-if="$v.person.phone.$dirty && !$v.person.phone.startsWithSeven">Телефон должен быть в формате 7XXXXXXXXXX</div>
+              </template>
+            </FormInput>
+            <Checkbox id="no-sms" name="no-sms" v-model="$v.noSMS.$model" value="no-sms"
+                      label="Не отправлять СМС"></Checkbox>
+            <div class="input">
+              <p class="input__label">Пол</p>
+              <div class="input-group input-group_row input-group_condensed">
+                <RadioButton v-model="$v.person.sex.$model" value="male" name="sex" id="sex-male" label="Мужской"></RadioButton>
+                <RadioButton v-model="$v.person.sex.$model" value="female" name="sex" id="sex-female" label="Женский"></RadioButton>
+              </div>
+            </div>
 
-        <FormInput v-model="$v.document.serial.$model" name="doc-serial" id="doc-serial" label="Серия и номер"></FormInput>
-        <h3>Выдан</h3>
-        <FormInput required v-model="$v.document.issueDate.$model" type="date" name="issue-date" id="issue-date"
-                   label="Когда">
-          <template slot="errors">Это поле обязательно</template>
-        </FormInput>
-        <FormInput v-model="$v.document.issuedAt.$model" name="issued-at" id="issued-at" label="Кем"></FormInput>
+          </div>
+        </div>
+        <div class="col">
+          <h2>Адрес</h2>
+          <div class="input-group">
+            <FormInput :style="{width: '128px'}" v-model.trim="$v.address.index.$model" name="index" id="index" label="Индекс"></FormInput>
+            <FormInput v-model.trim="$v.address.country.$model" name="country" id="country" label="Страна"></FormInput>
+            <FormInput v-model.trim="$v.address.district.$model" name="district" id="district" label="Область"></FormInput>
+            <FormInput required v-model.trim="$v.address.city.$model" name="city" id="city" label="Город">
+              <template slot="errors">
+                <div class="error" v-if="$v.address.city.$dirty && !$v.address.city.required">
+                  Это поле обязательно
+                </div>
+              </template>
+            </FormInput>
+            <FormInput v-model.trim="$v.address.street.$model" name="street" id="street" label="Улица"></FormInput>
+            <FormInput :style="{width: '128px'}" v-model.trim="$v.address.house.$model" name="house" id="house" label="Дом"></FormInput>
+          </div>
+        </div>
       </div>
-      <h2>Опции</h2>
-      <p>Группа клиентов</p>
-      <div class="input-group input-group_list">
-        <Checkbox v-model="$v.medical.group.$model" value="vip" name="medical-group" id="group-vip" label="VIP"></Checkbox>
-        <Checkbox v-model="$v.medical.group.$model" value="problem" name="medical-group" id="group-problem" label="Проблемные"></Checkbox>
-        <Checkbox v-model="$v.medical.group.$model" value="oms" name="medical-group" id="group-oms" label="ОМС"></Checkbox>
+      <div class="row">
+        <div class="col">
+          <h2>Документ, удостоверяющий личность</h2>
+          <div class="input-group input-group_document">
+            <Select
+                required
+                v-model="$v.document.type.$model"
+                label="Тип документа"
+                name="doc-type"
+                id="doc-type"
+                :options="documentTypes">
+              <template slot="errors">
+                <div class="error" v-if="$v.document.type.$dirty && !$v.document.type.required">Это поле обязательно</div>
+              </template>
+            </Select>
+
+            <FormInput v-model.trim="$v.document.serial.$model" name="doc-serial" id="doc-serial" label="Серия и номер"></FormInput>
+            <FormInput required v-model="$v.document.issueDate.$model" type="date" name="issue-date" id="issue-date"
+                       label="Когда выдан">
+              <template slot="errors">
+                <div class="error" v-if="$v.document.issuedAt.$dirty && !$v.document.issuedAt.required">Это поле обязательно</div>
+              </template>
+            </FormInput>
+            <FormInput v-model.trim="$v.document.issuedAt.$model" name="issued-at" id="issued-at" label="Кем выдан"></FormInput>
+          </div>
+        </div>
+        <div class="col">
+          <h2 class="input-group__title">Опции</h2>
+          <div class="input__label">Группа клиентов</div>
+          <div class="input-group input-group_list">
+            <Checkbox v-model="$v.medical.group.$model" value="vip" name="medical-group" id="group-vip" label="VIP"></Checkbox>
+            <Checkbox v-model="$v.medical.group.$model" value="problem" name="medical-group" id="group-problem" label="Проблемные"></Checkbox>
+            <Checkbox v-model="$v.medical.group.$model" value="oms" name="medical-group" id="group-oms" label="ОМС"></Checkbox>
+          </div>
+          <Select
+              v-model="$v.medical.doctor.$model"
+              label="Лечащий врач"
+              name="doctor"
+              id="doctor"
+              :options="doctors">
+          </Select>
+        </div>
       </div>
-      <Select
-          v-model="$v.medical.doctor.$model"
-          label="Лечащий врач"
-          name="doctor"
-          id="doctor"
-          :options="doctors">
-      </Select>
+
       <div class="client-form__footer">
         <button type="submit">Добавить</button>
       </div>
@@ -183,7 +205,7 @@ export default {
       },
       phone: {
         required,
-        startsWith: (value) => value.startsWith('7'),
+        startsWithSeven: (value) => value.startsWith('7'),
         length: (value) => value.length === 11,
       },
       sex: {},
@@ -224,6 +246,7 @@ export default {
 <style lang="scss">
 @import "../../styles/common";
 @import "../../styles/input-group";
+@import "../../styles/input";
 .client-form {
   max-width: 800px;
   margin: 0 auto;
@@ -234,12 +257,18 @@ export default {
   &__footer {
     margin-top: 1rem;
   }
+  @media (max-width: 800px) {
+    .row {
+      flex-direction: column;
+      .input {
+        max-width: 100%;
+      }
+    }
+  }
 }
 
-.row {
-  display: flex;
-  column-gap: 1rem;
-  align-items: flex-end;
+.col_options {
+  justify-content: space-between;
 }
 
 

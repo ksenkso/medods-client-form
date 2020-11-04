@@ -23,6 +23,10 @@ html, body {
   padding: 0;
 }
 
+body {
+  margin: 2rem;
+}
+
 * {
   box-sizing: border-box;
 }
