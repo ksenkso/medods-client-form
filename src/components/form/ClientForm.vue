@@ -41,12 +41,24 @@
                 <div class="error" v-if="$v.person.dateOfBirth.$dirty && !$v.person.dateOfBirth.required">Это поле обязательно</div>
               </template>
             </FormInput>
-            <FormInput required v-model.trim="$v.person.phone.$model" name="phone" type="tel" id="phone" label="Телефон" class="input_phone">
+            <MaskedInput
+                required
+                mask="7__________"
+                @change="$v.person.phone.$model = $event.trim()"
+                @blur="$v.person.phone.$touch()"
+                :value="$v.person.phone.$model"
+                name="phone"
+                type="tel"
+                id="phone"
+                label="Телефон"
+                class="input_phone"
+            >
               <template slot="errors">
                 <div class="error" v-if="$v.person.phone.$dirty && !$v.person.phone.required">Это поле обязательно</div>
                 <div class="error" v-if="$v.person.phone.$dirty && !$v.person.phone.startsWithSeven">Телефон должен быть в формате 7XXXXXXXXXX</div>
+                <div class="error" v-if="$v.person.phone.$dirty && !$v.person.phone.length">Телефон должен содержать 11 цифр</div>
               </template>
-            </FormInput>
+            </MaskedInput>
             <Checkbox id="no-sms" name="no-sms" v-model="$v.noSMS.$model" value="no-sms"
                       label="Не отправлять СМС"></Checkbox>
             <div class="input">
@@ -135,6 +147,7 @@ import {required} from 'vuelidate/lib/validators';
 import Select from '@/components/common/Select.vue';
 import Checkbox from '@/components/common/Checkbox.vue';
 import RadioButton from '@/components/common/RadioButton.vue';
+import MaskedInput from '@/components/common/MaskedInput.vue';
 
 export default {
   name: 'ClientForm',
@@ -142,7 +155,8 @@ export default {
     FormInput,
     Select,
     Checkbox,
-    RadioButton
+    RadioButton,
+    MaskedInput
   },
   mixins: [validationMixin],
   data() {
@@ -184,6 +198,7 @@ export default {
         {value: '2', text: 'Захаров'},
         {value: '3', text: 'Чернышева'},
       ],
+      test: '',
     }
   },
   methods: {
@@ -239,6 +254,7 @@ export default {
       },
     },
     noSMS: {},
+    test: {}
   },
 }
 </script>
