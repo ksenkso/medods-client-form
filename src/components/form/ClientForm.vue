@@ -43,7 +43,7 @@
             </FormInput>
             <MaskedInput
                 required
-                mask="7__________"
+                mask="7(___)___-__-__"
                 @change="$v.person.phone.$model = $event.trim()"
                 @blur="$v.person.phone.$touch()"
                 :value="$v.person.phone.$model"
@@ -221,7 +221,7 @@ export default {
       phone: {
         required,
         startsWithSeven: (value) => value.startsWith('7'),
-        length: (value) => value.length === 11,
+        length: (value) => value.length === 15, // 11 digits + 2 parens + 2 minuses
       },
       sex: {},
     },
