@@ -5,9 +5,9 @@
     </label>
     <input @change="onChange" :value="value" type="checkbox" :name="name" :id="id"
            :required="required" :class="inputClassName" :checked="isChecked">
-    <span class="input__errors">
-        <slot name="errors"></slot>
-      </span>
+    <div class="input__errors">
+      <slot name="errors"></slot>
+    </div>
   </div>
 
 </template>
@@ -17,7 +17,7 @@ export default {
   name: 'Checkbox',
   model: {
     prop: 'checked',
-    event: 'change'
+    event: 'change',
   },
   props: {
     name: {
@@ -35,17 +35,13 @@ export default {
       type: String,
       required: true,
     },
-    value: {
-
-    },
-    checked: {
-
-    },
+    value: {},
+    checked: {},
     checkedValue: {
-      default: true
+      default: true,
     },
     uncheckedValue: {
-      default: false
+      default: false,
     },
   },
   methods: {
@@ -59,7 +55,7 @@ export default {
       } else {
         this.$emit('change', e.target.checked ? this.checkedValue : this.uncheckedValue);
       }
-    }
+    },
   },
   computed: {
     inputClassName() {
@@ -77,7 +73,7 @@ export default {
       } else {
         return this.value === this.checked;
       }
-    }
+    },
   },
 }
 </script>

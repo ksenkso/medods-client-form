@@ -5,9 +5,9 @@
     </label>
     <input @input="$emit('input', $event.target.value)" :value="$attrs.value" :type="type" :name="name" :id="id"
            :required="required" :class="className">
-    <span class="input__errors">
-        <slot name="errors"></slot>
-      </span>
+    <div class="input__errors">
+      <slot name="errors"></slot>
+    </div>
   </div>
 
 </template>

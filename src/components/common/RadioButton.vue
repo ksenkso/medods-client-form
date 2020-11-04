@@ -5,9 +5,9 @@
     </label>
     <input @change="onChange" :value="value" type="radio" :name="name" :id="id"
            :required="required" :class="inputClassName" :checked="isChecked">
-    <span class="input__errors">
-        <slot name="errors"></slot>
-      </span>
+    <div class="input__errors">
+      <slot name="errors"></slot>
+    </div>
   </div>
 
 </template>

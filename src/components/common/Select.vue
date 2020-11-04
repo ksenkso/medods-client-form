@@ -6,6 +6,9 @@
     <select :value="value" :name="name" :id="id" @change="$emit('change', $event.target.value)" :class="className">
       <option v-for="(option, i) in options" :key="i" :value="option.value">{{ option.text }}</option>
     </select>
+    <div class="input__errors">
+      <slot name="errors"></slot>
+    </div>
   </div>
 </template>
 

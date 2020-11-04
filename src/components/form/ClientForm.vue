@@ -7,22 +7,39 @@
       <h2>Пациент</h2>
       <div class="input-group input-group_fio">
         <FormInput required v-model="$v.person.lastName.$model" name="last-name" id="last-name"
-                   label="Фамилия"></FormInput>
+                   label="Фамилия">
+          <template slot="errors">
+            <div class="error">Это поле обязательно</div>
+          </template>
+        </FormInput>
         <FormInput required v-model="$v.person.firstName.$model" name="first-name" id="first-name"
-                   label="Имя"></FormInput>
+                   label="Имя">
+          <template slot="errors">
+            <div class="error">Это поле обязательно</div>
+          </template>
+        </FormInput>
         <FormInput v-model="$v.person.patronymic.$model" name="patronymic" id="patronymic" label="Отчество"></FormInput>
       </div>
       <div class="input-group">
         <FormInput
+            required
             v-model="$v.person.dateOfBirth.$model"
             name="date-of-birth"
             type="date" id="date-of-birth"
             label="Дата рождения"
             class="input_birth"
         >
+          <template slot="errors">
+            <div class="error">Это поле обязательно</div>
+          </template>
         </FormInput>
         <div class="input-group input-group_phone">
-          <FormInput required v-model="$v.person.phone.$model" name="phone" type="tel" id="phone" label="Телефон" class="input_phone"></FormInput>
+          <FormInput required v-model="$v.person.phone.$model" name="phone" type="tel" id="phone" label="Телефон" class="input_phone">
+            <template slot="errors">
+              <div class="error">Это поле обязательно</div>
+              <div class="error">Телефон должен быть в формате 7XXXXXXXXXX</div>
+            </template>
+          </FormInput>
           <Checkbox id="no-sms" name="no-sms" v-model="$v.noSMS.$model" value="no-sms"
                      label="Не отправлять СМС"></Checkbox>
         </div>
@@ -41,7 +58,9 @@
           <FormInput v-model="$v.address.district.$model" name="district" id="district" label="Область"></FormInput>
         </div>
         <div class="col">
-          <FormInput required v-model="$v.address.city.$model" name="city" id="city" label="Город"></FormInput>
+          <FormInput required v-model="$v.address.city.$model" name="city" id="city" label="Город">
+            <template slot="errors">Это поле обязательно</template>
+          </FormInput>
           <FormInput v-model="$v.address.street.$model" name="street" id="street" label="Улица"></FormInput>
           <FormInput v-model="$v.address.house.$model" name="house" id="house" label="Дом"></FormInput>
         </div>
@@ -55,12 +74,15 @@
             name="doc-type"
             id="doc-type"
             :options="documentTypes">
+          <template slot="errors">Это поле обязательно</template>
         </Select>
 
         <FormInput v-model="$v.document.serial.$model" name="doc-serial" id="doc-serial" label="Серия и номер"></FormInput>
         <h3>Выдан</h3>
         <FormInput required v-model="$v.document.issueDate.$model" type="date" name="issue-date" id="issue-date"
-                   label="Когда"></FormInput>
+                   label="Когда">
+          <template slot="errors">Это поле обязательно</template>
+        </FormInput>
         <FormInput v-model="$v.document.issuedAt.$model" name="issued-at" id="issued-at" label="Кем"></FormInput>
       </div>
       <h2>Опции</h2>
@@ -199,7 +221,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../../styles/common";
 @import "../../styles/input-group";
 .client-form {
@@ -221,19 +243,5 @@ export default {
 }
 
 
-
-//.input_birth, .input_phone {
-//  max-width: calc(calc(100% - 2rem) / 3);
-//  width: 100%;
-//  @media (max-width: 700px) {
-//    max-width: 100%;
-//  }
-//}
-//
-//.input_phone {
-//  @media (max-width: 700px) {
-//    max-width: 100%;
-//  }
-//}
 </style>
 

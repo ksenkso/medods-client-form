@@ -23,4 +23,8 @@
   @media (max-width: 700px) {
     max-width: 100%;
   }
+  &__errors {
+    color: #d05555;
+    margin-top: .2rem;
+  }
 }
