@@ -1,0 +1,5 @@
+@import "mixins";
+
+.col {
+  @include col;
+}
