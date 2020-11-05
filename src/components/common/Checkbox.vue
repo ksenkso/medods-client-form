@@ -5,9 +5,9 @@
     </label>
     <input @change="onChange" :value="value" type="checkbox" :name="name" :id="id"
            :required="required" :class="inputClassName" :checked="isChecked">
-    <div class="input__errors">
+    <ul class="input__errors">
       <slot name="errors"></slot>
-    </div>
+    </ul>
   </div>
 
 </template>

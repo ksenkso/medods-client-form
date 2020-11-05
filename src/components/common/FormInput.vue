@@ -13,9 +13,9 @@
         :required="required"
         :class="className"
     >
-    <div class="input__errors">
+    <ul class="input__errors">
       <slot name="errors"></slot>
-    </div>
+    </ul>
   </div>
 
 </template>
