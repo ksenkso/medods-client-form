@@ -75,3 +75,11 @@
     row-gap: .5rem;
   }
 }
+.options-group {
+  &__name {
+    margin-bottom: .25rem;
+  }
+  &_row {
+    display: flex;
+  }
+}

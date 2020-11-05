@@ -61,8 +61,8 @@
             </MaskedInput>
             <Checkbox id="no-sms" name="no-sms" v-model="$v.noSMS.$model" value="no-sms"
                       label="Не отправлять СМС"></Checkbox>
-            <div class="input">
-              <p class="input__label">Пол</p>
+            <div class="options-group">
+              <div class="options-group__name">Пол</div>
               <div class="input-group input-group_row input-group_condensed">
                 <RadioButton v-model="$v.person.sex.$model" value="male" name="sex" id="sex-male" label="Мужской"></RadioButton>
                 <RadioButton v-model="$v.person.sex.$model" value="female" name="sex" id="sex-female" label="Женский"></RadioButton>
@@ -117,11 +117,14 @@
         </div>
         <div class="col">
           <h2 class="input-group__title">Опции</h2>
-          <div class="input__label">Группа клиентов</div>
-          <div class="input-group input-group_list">
+          <div class="options-group">
+            <div class="options-group__name">Группа клиентов</div>
             <Checkbox v-model="$v.medical.group.$model" value="vip" name="medical-group" id="group-vip" label="VIP"></Checkbox>
             <Checkbox v-model="$v.medical.group.$model" value="problem" name="medical-group" id="group-problem" label="Проблемные"></Checkbox>
             <Checkbox v-model="$v.medical.group.$model" value="oms" name="medical-group" id="group-oms" label="ОМС"></Checkbox>
+          </div>
+          <div class="input-group input-group_list">
+
           </div>
           <Select
               v-model="$v.medical.doctor.$model"
