@@ -7,6 +7,7 @@
       <form action="#" @submit.prevent="onSubmit" novalidate>
         <FormSlider @slide-change="onSlideChange">
           <component
+              ref="pages"
               v-for="(component, index) in pages"
               :is="component"
               :key="index"
@@ -95,7 +96,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.$v);
+      this.$refs.pages.map(page => {
+        const v = page.getErrors();
+        v.$touch();
+      })
     },
     onSlideChange(index) {
       this.page = index;
@@ -189,12 +193,6 @@ export default {
   }
 
   &__page {
-    visibility: hidden;
-
-    &_active {
-      visibility: visible;
-    }
-
     .col {
       height: 100%;
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="form-slider">
     <div ref="content" class="form-slider__content">
-      <div class="form-slider__inner" :style="contentStyle">
+      <div class="form-slider__inner" :style="contentStyle" @transitionend="focusFirst">
         <slot></slot>
       </div>
     </div>
@@ -39,8 +39,33 @@ export default {
       const nextPage = this.page + amount;
       if (nextPage >= 0 && nextPage < this.pagesCount) {
         this.page = nextPage;
+        this.reactivateFocus()
         this.$emit('slide-change', this.page);
       }
+    },
+    reactivateFocus() {
+      this.$slots.default.forEach((page, index) => {
+        console.log(page)
+        const controls = Array.from(page.componentInstance.$el.querySelectorAll('input, a, button, select'));
+        if (index !== this.page) {
+          controls.forEach(control => {
+            control.tabIndex = -1;
+          })
+        } else {
+          controls.forEach(control => {
+            control.tabIndex = 1;
+          });
+        }
+      })
+    },
+    focusFirst() {
+      // we cannot control where in the dom the first component will be, so we need to use DOM API to focus on it
+      this.$slots.default[this.page].componentInstance.$el.querySelectorAll('input, a, button, select')
+        .item(0)
+        .focus();
+    },
+    updateWidth() {
+      this.width = this.$refs.content ? this.$refs.content.clientWidth : 0;
     }
   },
   computed: {
@@ -54,7 +79,9 @@ export default {
     },
   },
   mounted() {
-    this.width = this.$refs.content ? this.$refs.content.clientWidth : 0;
+    this.updateWidth();
+    this.reactivateFocus();
+    window.addEventListener('resize', this.updateWidth);
   }
 }
 </script>
@@ -72,6 +99,7 @@ export default {
     justify-content: flex-end;
     column-gap: 1rem;
   }
+
   &__content {
     width: 100%;
     max-width: 100%;
