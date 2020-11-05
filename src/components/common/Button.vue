@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" :class="className" :type="type">
+  <component :is="tag" :class="className" :type="type" v-on="$listeners">
     <slot></slot>
   </component>
 </template>
@@ -35,5 +35,6 @@ export default {
   outline-color: transparentize($primary-color, .3);
   padding: .6em 1.2em;
   color: #ffffff;
+  font-size: 1rem;
 }
 </style>
