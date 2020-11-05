@@ -11,9 +11,6 @@
         <Checkbox v-model="$v.group.$model" value="oms" name="medical-group" id="group-oms"
                   label="ОМС"></Checkbox>
       </div>
-      <div class="input-group input-group_list">
-
-      </div>
       <Select
           v-model="$v.doctor.$model"
           label="Лечащий врач"
@@ -47,6 +44,7 @@ export default {
       group: [],
       doctor: null,
       doctors: [
+        {value: '', text: 'Выберите врача'},
         {value: '1', text: 'Иванов'},
         {value: '2', text: 'Захаров'},
         {value: '3', text: 'Чернышева'},
