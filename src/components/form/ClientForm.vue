@@ -137,7 +137,7 @@
       </div>
 
       <div class="client-form__footer">
-        <button type="submit">Добавить</button>
+        <Button type="submit">Добавить</Button>
       </div>
     </form>
   </div>
@@ -151,6 +151,7 @@ import Select from '@/components/common/Select.vue';
 import Checkbox from '@/components/common/Checkbox.vue';
 import RadioButton from '@/components/common/RadioButton.vue';
 import MaskedInput from '@/components/common/MaskedInput.vue';
+import Button from "@/components/common/Button.vue";
 
 export default {
   name: 'ClientForm',
@@ -159,7 +160,8 @@ export default {
     Select,
     Checkbox,
     RadioButton,
-    MaskedInput
+    MaskedInput,
+    Button
   },
   mixins: [validationMixin],
   data() {
