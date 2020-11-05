@@ -1,5 +1,5 @@
 <template>
-  <FormPage :active="active">
+  <div class="client-form__page">
     <div class="col">
       <h2>Пациент</h2>
       <div class="input-group">
@@ -77,7 +77,7 @@
 
       </div>
     </div>
-  </FormPage>
+  </div>
 </template>
 
 <script>
@@ -88,12 +88,10 @@ import FormInput from "@/components/common/FormInput.vue";
 import {required} from "vuelidate/lib/validators";
 import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
-import FormPage from "@/components/form/FormPage.vue";
 
 export default {
   name: "PagePatient",
   components: {
-    FormPage,
     RadioButton,
     Checkbox,
     MaskedInput,

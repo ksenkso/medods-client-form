@@ -1,5 +1,5 @@
 <template>
-  <FormPage :active="active">
+  <div class="client-form__page">
     <div class="col">
       <h2 class="input-group__title">Опции</h2>
       <div class="options-group">
@@ -23,7 +23,7 @@
       </Select>
       <Button class="client-form__submit" type="submit">Добавить клиента</Button>
     </div>
-  </FormPage>
+  </div>
 </template>
 
 <script>
@@ -33,12 +33,10 @@ import Checkbox from "@/components/common/Checkbox.vue";
 import {required} from "vuelidate/lib/validators";
 import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
-import FormPage from "@/components/form/FormPage.vue";
 
 export default {
   name: "PageMedical",
   components: {
-    FormPage,
     Select,
     Button,
     Checkbox

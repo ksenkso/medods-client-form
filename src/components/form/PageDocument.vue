@@ -1,5 +1,5 @@
 <template>
-  <FormPage :active="active">
+  <div class="client-form__page">
     <div class="col">
       <h2>Документ, удостоверяющий личность</h2>
       <div class="input-group input-group_document">
@@ -29,7 +29,7 @@
                    label="Кем выдан"></FormInput>
       </div>
     </div>
-  </FormPage>
+  </div>
 </template>
 
 <script>
@@ -38,12 +38,10 @@ import Select from "@/components/common/Select.vue";
 import {required} from "vuelidate/lib/validators";
 import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
-import FormPage from "@/components/form/FormPage.vue";
 
 export default {
   name: "PageDocument",
   components: {
-    FormPage,
     FormInput,
     Select,
   },
