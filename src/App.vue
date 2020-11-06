@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 html, body {
   font-size: 16px;
   margin: 0;
@@ -25,6 +25,9 @@ html, body {
 
 body {
   margin: 2rem;
+  @media (max-width: 700px) {
+    margin: 2rem 1rem;
+  }
 }
 
 * {

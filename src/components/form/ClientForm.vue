@@ -107,6 +107,10 @@ export default {
   border-radius: 3px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
 
+  @media (max-width: 700px) {
+    padding: 1rem;
+  }
+
   &__header {
     h1 {
       padding-left: 3.5rem;
