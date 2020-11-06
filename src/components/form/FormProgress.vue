@@ -19,6 +19,13 @@
               cx="32"
               cy="32">
           </circle>
+          <circle
+              class="indicator__active"
+              :r="circleRadius"
+              :style="activeStyle"
+              cx="32"
+              cy="32" >
+          </circle>
         </g>
 
         <text x="32" y="36" text-anchor="middle">{{ active + 1 }} из {{ steps.length }}</text>
@@ -80,7 +87,6 @@ export default {
     getCircleClass(index) {
       return [
         'indicator__circle',
-        index === this.active && 'indicator__circle_active',
         this.errors.has(index) && 'indicator__circle_error',
         this.valid.has(index) && 'indicator__circle_valid'
       ]
@@ -94,10 +100,17 @@ export default {
       return Math.PI * 2 * this.circleRadius
     },
     maskStyle() {
-
       return {
         'stroke-dasharray': this.circumference,
         'stroke-dashoffset': this.circumference * (1 / this.steps.length) *  (this.active + 1),
+      }
+    },
+    activeStyle() {
+      const angle = Math.PI * 2 / this.steps.length;
+      return {
+        'stroke-dasharray': this.circumference,
+        'stroke-dashoffset': this.circumference * (1 - 1 / this.steps.length),
+        transform: `rotateZ(${-this.active * angle}rad) rotateX(180deg)`,
       }
     }
   }
@@ -109,6 +122,7 @@ export default {
 
 .form-progress {
   position: relative;
+  margin-bottom: 1rem;
 
   &::after {
     content: '';
@@ -126,7 +140,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1rem;
     &::after {
       display: none;
     }
@@ -176,12 +189,6 @@ export default {
       }
     }
 
-    &_active {
-      &::after {
-        background: transparentize($primary-color, .3);
-      }
-    }
-
     @media (max-width: 700px) {
       display: none;
       &::after {
@@ -216,7 +223,7 @@ export default {
 
   &__circle {
     fill: none;
-    stroke: lighten($primary-color, 10%);
+    stroke: #cccccc;
     stroke-width: 6px;
     transition: stroke .3s ease-in-out;
     &_valid {
@@ -236,6 +243,14 @@ export default {
     stroke: #cccccc;
     stroke-width: 7px;
     transition: stroke-dashoffset .3s ease-in-out;
+  }
+
+  &__active {
+    fill: none;
+    stroke: lighten($primary-color, 10%);
+    stroke-width: 6px;
+    transition: transform .3s ease-in-out;
+    transform-origin: center;
   }
 }
 </style>
