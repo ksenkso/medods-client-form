@@ -76,6 +76,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+@media (min-width: 700px) {
+  .input-group {
+    width: 60%;
+    .input {
+      max-width: 100%;
+    }
+  }
+}
 </style>
