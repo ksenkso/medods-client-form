@@ -124,6 +124,7 @@ export default {
 .form-slider {
   width: 100%;
   &__nav {
+    margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
     column-gap: 1rem;
