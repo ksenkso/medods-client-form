@@ -1,7 +1,6 @@
 <template>
   <div class="client-form__page">
     <div class="col">
-      <h2>Пациент</h2>
       <div class="input-group">
         <FormInput
             required

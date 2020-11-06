@@ -1,7 +1,6 @@
 <template>
   <div class="client-form__page">
     <div class="col">
-      <h2 class="input-group__title">Опции</h2>
       <div class="options-group">
         <div class="options-group__name">Группа клиентов</div>
         <Checkbox v-model="$v.group.$model" value="vip" name="medical-group" id="group-vip"

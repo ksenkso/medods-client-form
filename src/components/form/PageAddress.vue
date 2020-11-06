@@ -1,7 +1,6 @@
 <template>
   <div class="client-form__page">
     <div class="col">
-      <h2>Адрес</h2>
       <div class="input-group">
         <FormInput :style="{width: '128px'}" v-model.trim="$v.index.$model" name="index" id="index"
                    label="Индекс"></FormInput>

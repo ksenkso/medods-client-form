@@ -1,7 +1,6 @@
 <template>
   <div class="client-form__page">
     <div class="col">
-      <h2>Документ, удостоверяющий личность</h2>
       <div class="input-group input-group_document">
         <Select
             required
@@ -14,13 +13,16 @@
             <li class="error" v-if="$v.type.$dirty && !$v.type.required">Это поле обязательно</li>
           </template>
         </Select>
-
-        <FormInput v-model.trim="$v.serial.$model" name="doc-serial" id="doc-serial"
-                   label="Серия и номер"></FormInput>
+        <div class="row">
+          <FormInput :style="{width: '100px'}" v-model.trim="$v.series.$model" name="doc-series" id="doc-series"
+                     label="Серия"></FormInput>
+          <FormInput v-model.trim="$v.number.$model" name="doc-number" id="doc-number"
+                     label="Номер"></FormInput>
+        </div>
         <FormInput required v-model="$v.issueDate.$model" type="date" name="issue-date" id="issue-date"
                    label="Когда выдан">
           <template slot="errors">
-            <li class="error" v-if="$v.issuedAt.$dirty && !$v.issuedAt.required">Это поле
+            <li class="error" v-if="$v.issueDate.$dirty && !$v.issueDate.required">Это поле
               обязательно
             </li>
           </template>
@@ -49,7 +51,8 @@ export default {
   data() {
     return {
       type: 'passport',
-      serial: '',
+      series: '',
+      number: '',
       issuedAt: '',
       issueDate: '',
       documentTypes: [
@@ -67,9 +70,8 @@ export default {
       required,
     },
     issuedAt: {},
-    serial: {
-      hasSpace: (value) => value.indexOf(' ') > -1,
-    },
+    series: {},
+    number: {}
   }
 }
 </script>
