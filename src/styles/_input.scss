@@ -63,6 +63,7 @@
     }
     color: $error-color;
     margin-top: .25rem;
+    margin-bottom: 0;
     padding-left: 1.5rem;
     &:empty {
       display: none;
