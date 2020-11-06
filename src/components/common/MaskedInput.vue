@@ -93,6 +93,12 @@ export default {
       this.$refs.input.$forceUpdate();
     }
   },
+  watch: {
+    value(newValue) {
+      console.log(newValue)
+      this.maskedValue = applyMask(newValue, this.mask);
+    }
+  }
 }
 </script>
 
