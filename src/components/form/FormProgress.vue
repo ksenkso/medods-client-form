@@ -122,7 +122,7 @@ export default {
 
 .form-progress {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   &::after {
     content: '';
@@ -138,8 +138,9 @@ export default {
 
   @media (max-width: 700px) {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    margin-bottom: 1rem;
+    column-gap: 1rem;
     &::after {
       display: none;
     }
@@ -154,7 +155,6 @@ export default {
     @media (max-width: 700px) {
       justify-content: flex-end;
       flex-direction: column;
-      align-items: flex-end;
     }
   }
 
@@ -179,13 +179,19 @@ export default {
 
     &_valid {
       &::after {
-        background: transparentize($valid-color, .3);
+        background: lighten($valid-color, 10%);
       }
     }
 
     &_error {
       &::after {
-        background: transparentize($error-color, .3);
+        background: lighten($error-color, 10%);
+      }
+    }
+
+    &_active {
+      &::after {
+        background: lighten($primary-color, 20%);
       }
     }
 
@@ -213,6 +219,9 @@ export default {
 .indicator {
   width: 100px;
   height: 100px;
+  text {
+    font-size: .8rem;
+  }
   @media (min-width: 700px) {
     display: none;
   }
@@ -233,10 +242,6 @@ export default {
     &_error {
       stroke: lighten($error-color, 10%);
     }
-
-    &_active {
-      stroke: lighten($primary-color, 10%);
-    }
   }
   &__mask {
     fill: none;
@@ -247,7 +252,7 @@ export default {
 
   &__active {
     fill: none;
-    stroke: lighten($primary-color, 10%);
+    stroke: lighten($primary-color, 20%);
     stroke-width: 6px;
     transition: transform .3s ease-in-out;
     transform-origin: center;
