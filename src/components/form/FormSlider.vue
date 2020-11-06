@@ -34,18 +34,40 @@ export default {
       width: 0,
     }
   },
+  props: {
+    adaptiveHeight: Boolean,
+  },
   methods: {
     movePage(amount) {
       const nextPage = this.page + amount;
-      if (nextPage >= 0 && nextPage < this.pagesCount) {
-        this.page = nextPage;
-        this.reactivateFocus()
-        this.$emit('slide-change', this.page);
+      this.navigate(nextPage);
+    },
+    navigate(index) {
+      if (this.validIndex(index)) {
+        const v = this.$slots.default[this.page].componentInstance.getErrors();
+        /**
+         * 1. touch fields
+         * 2. wait for layout shifts
+         * 3. update slide width
+         * 4. go to the next slide
+         */
+        v.$touch();
+        this.$nextTick(() => {
+          this.updateWidth();
+          this.page = index;
+          if (this.adaptiveHeight) {
+            this.updateHeight();
+          }
+          this.reactivateFocus();
+          this.$emit('slide-change', this.page);
+        });
       }
+    },
+    validIndex(index) {
+      return index >= 0 && index < this.pagesCount
     },
     reactivateFocus() {
       this.$slots.default.forEach((page, index) => {
-        console.log(page)
         const controls = Array.from(page.componentInstance.$el.querySelectorAll('input, a, button, select'));
         if (index !== this.page) {
           controls.forEach(control => {
@@ -66,20 +88,30 @@ export default {
     },
     updateWidth() {
       this.width = this.$refs.content ? this.$refs.content.clientWidth : 0;
-    }
+    },
+    updateHeight() {
+      this.height = this.$slots.default[this.page].componentInstance.$el.clientHeight;
+    },
+
   },
   computed: {
     pagesCount() {
       return this.$slots.default ? this.$slots.default.length : 0;
     },
     contentStyle() {
-      return {
-        transform: `translateX(-${this.page * this.width}px)`
+      const style = {
+        transform: `translateX(-${this.page * this.width}px)`,
+
       }
+      if (this.adaptiveHeight) {
+        style.height = `${this.height}px`;
+      }
+      return style;
     },
   },
   mounted() {
     this.updateWidth();
+    this.updateHeight()
     this.reactivateFocus();
     window.addEventListener('resize', this.updateWidth);
   }
@@ -91,9 +123,6 @@ export default {
 
 .form-slider {
   width: 100%;
-  //display: flex;
-  //align-items: center;
-  //column-gap: 1rem;
   &__nav {
     display: flex;
     justify-content: flex-end;
@@ -107,8 +136,10 @@ export default {
   }
 
   &__inner {
-    transition: transform .3s ease-in-out;
+    transition: .3s ease-in-out;
+    transition-property: height, transform;
     display: flex;
+    align-items: flex-start;
   }
 
   &__button {
