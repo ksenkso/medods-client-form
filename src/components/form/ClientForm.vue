@@ -22,7 +22,6 @@
         </FormSlider>
       </form>
     </div>
-
   </div>
 </template>
 
@@ -81,7 +80,6 @@ export default {
     },
     onSlideChange(index) {
       const v = this.$refs.pages[this.page].getErrors();
-      console.log(v.$anyError, v.$invalid);
       if (v.$anyError) {
         this.valid.delete(this.page);
         this.errors.add(this.page);
