@@ -1,6 +1,6 @@
 <template>
   <div class="form-progress">
-    <div class="form-progress__indicator indicator">
+    <div :class="indicatorClass">
       <svg viewBox="0 0 64 64" class="indicator__container">
         <g class="indicator__circles">
           <circle
@@ -13,6 +13,7 @@
               cy="32">
           </circle>
           <circle
+              v-if="!complete"
               class="indicator__mask"
               :r="circleRadius"
               :style="maskStyle"
@@ -27,11 +28,11 @@
               cy="32" >
           </circle>
         </g>
-
-        <text x="32" y="36" text-anchor="middle">{{ active + 1 }} из {{ steps.length }}</text>
+        <path class="indicator__mark" d="M 16,32 L 32 46 50 21" stroke="green" fill="none" stroke-width="4"></path>
+        <text class="indicator__text" x="32" y="36" text-anchor="middle" v-if="!complete">{{ active + 1 }} из {{ steps.length }}</text>
       </svg>
     </div>
-    <ul class="form-progress__steps">
+    <ul class="form-progress__steps" v-if="!complete">
       <li
           @click="goTo(index)"
           :class="getStepClass(index)"
@@ -109,9 +110,15 @@ export default {
       const angle = Math.PI * 2 / this.steps.length;
       return {
         'stroke-dasharray': this.circumference,
-        'stroke-dashoffset': this.circumference * (1 - 1 / this.steps.length),
+        'stroke-dashoffset': this.complete ? this.circumference : this.circumference * (1 - 1 / this.steps.length),
         transform: `rotateZ(${-this.active * angle}rad) rotateX(180deg)`,
       }
+    },
+    indicatorClass() {
+      return ['indicator', this.complete && 'indicator_complete'];
+    },
+    complete() {
+      return this.active >= this.steps.length;
     }
   }
 }
@@ -155,6 +162,7 @@ export default {
     @media (max-width: 700px) {
       justify-content: flex-end;
       flex-direction: column;
+      transition: opacity .3s ease-in-out;
     }
   }
 
@@ -221,13 +229,39 @@ export default {
 }
 
 .indicator {
+  position: relative;
+  left: 0;
+  transition: .3s ease-in-out;
+  transition-property: left, transform;
   width: 100px;
   height: 100px;
+  background-color: #fff;
+  z-index: 1;
   text {
     font-size: .8rem;
   }
   @media (min-width: 700px) {
     display: none;
+  }
+  &__mark {
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+  }
+  &_complete {
+    left: 50%;
+    transform: translateX(-50%);
+    .indicator__mark {
+      opacity: 1;
+    }
+    + .form-progress__steps {
+      opacity: 0;
+    }
+    .indicator__text {
+      opacity: 0;
+    }
+  }
+  &__text {
+    transition: opacity .15s ease-in-out;
   }
   &__circles {
     transform-origin: 50% 50%;
@@ -258,8 +292,11 @@ export default {
     fill: none;
     stroke: lighten($primary-color, 20%);
     stroke-width: 6px;
-    transition: transform .3s ease-in-out;
+    transition: .3s ease-in-out;
+    transition-property: transform, stroke-dashoffset;
     transform-origin: center;
   }
+  
+  
 }
 </style>
