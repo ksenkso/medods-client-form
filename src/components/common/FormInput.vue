@@ -13,6 +13,7 @@
         :required="required"
         :class="className"
     >
+    <div class="input__hint">{{hint}}</div>
     <ul class="input__errors">
       <slot name="errors"></slot>
     </ul>
@@ -43,8 +44,10 @@ export default {
     required: {
       type: Boolean,
     },
-
-    value: {}
+    value: {},
+    hint: {
+      type: String,
+    }
   },
   computed: {
     className() {
@@ -62,7 +65,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../styles/input";
-.input {
+/*.input {
   &_type {
     &-radio, &-checkbox {
       flex-direction: row-reverse;
@@ -74,5 +77,5 @@ export default {
       order: 1
     }
   }
-}
+}*/
 </style>

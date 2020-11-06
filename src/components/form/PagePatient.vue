@@ -42,6 +42,7 @@
         </FormInput>
         <MaskedInput
             required
+            hint="В формате 7(xxx)xxx-xx-xx"
             mask="7(___)___-__-__"
             @change="$v.phone.$model = $event.trim()"
             @blur="$v.phone.$touch()"
@@ -55,7 +56,7 @@
           <template slot="errors">
             <li class="error" v-if="$v.phone.$dirty && !$v.phone.required">Это поле обязательно</li>
             <li class="error" v-if="$v.phone.$dirty && !$v.phone.startsWithSeven">Телефон должен быть в
-              формате 7XXXXXXXXXX
+              формате 7(xxx)xxx-xx-xx
             </li>
             <li class="error" v-if="$v.phone.$dirty && !$v.phone.length">Телефон должен содержать 11
               цифр

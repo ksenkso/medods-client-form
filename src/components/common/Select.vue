@@ -6,6 +6,7 @@
     <select :value="value" :name="name" :id="id" @change="$emit('change', $event.target.value)" :class="className">
       <option v-for="(option, i) in options" :key="i" :value="option.value">{{ option.text }}</option>
     </select>
+    <div class="input__hint">{{hint}}</div>
     <ul class="input__errors">
       <slot name="errors"></slot>
     </ul>
@@ -39,6 +40,9 @@ export default {
     value: {},
     required: {
       type: Boolean,
+    },
+    hint: {
+      type: String,
     }
   },
   computed: {
