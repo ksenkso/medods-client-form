@@ -53,7 +53,6 @@ export default {
          */
         v.$touch();
         this.$nextTick(() => {
-          this.updateWidth();
           this.page = index;
           if (this.adaptiveHeight) {
             this.updateHeight();
@@ -86,9 +85,6 @@ export default {
         .item(0)
         .focus();
     },
-    updateWidth() {
-      this.width = this.$refs.content ? this.$refs.content.clientWidth : 0;
-    },
     updateHeight() {
       this.height = this.$slots.default[this.page].componentInstance.$el.clientHeight;
     },
@@ -100,8 +96,7 @@ export default {
     },
     contentStyle() {
       const style = {
-        transform: `translateX(-${this.page * this.width}px)`,
-
+        transform: `translateX(-${this.page * 100}%)`,
       }
       if (this.adaptiveHeight) {
         style.height = `${this.height}px`;
@@ -110,8 +105,7 @@ export default {
     },
   },
   mounted() {
-    this.updateWidth();
-    this.updateHeight()
+    this.updateHeight();
     this.reactivateFocus();
     window.addEventListener('resize', this.updateWidth);
   }
@@ -141,6 +135,7 @@ export default {
     transition-property: height, transform;
     display: flex;
     align-items: flex-start;
+
   }
 
   &__button {
