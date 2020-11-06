@@ -178,18 +178,22 @@ export default {
     }
 
     &_valid {
+      color: lighten($valid-color, 5%);
       &::after {
         background: lighten($valid-color, 10%);
       }
     }
 
     &_error {
+      color: lighten($error-color, 5%);
       &::after {
         background: lighten($error-color, 10%);
       }
     }
 
     &_active {
+      font-weight: bold;
+      color: lighten($primary-color, 10%);
       &::after {
         background: lighten($primary-color, 20%);
       }
