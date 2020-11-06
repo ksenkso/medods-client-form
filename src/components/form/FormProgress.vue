@@ -131,18 +131,6 @@ export default {
   position: relative;
   margin-bottom: 2rem;
 
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    border-bottom: 1px solid #cccccc;
-    height: 0;
-    z-index: -1;
-  }
-
   @media (max-width: 700px) {
     display: flex;
     align-items: flex-start;
@@ -159,10 +147,26 @@ export default {
     padding: 0;
     display: flex;
     justify-content: space-around;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      border-bottom: 1px solid #cccccc;
+      height: 0;
+      z-index: -1;
+    }
+
     @media (max-width: 700px) {
       justify-content: flex-end;
       flex-direction: column;
       transition: opacity .3s ease-in-out;
+      &::after {
+        display: none;
+      }
     }
   }
 
