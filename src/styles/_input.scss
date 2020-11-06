@@ -22,6 +22,19 @@
       }
     }
   }
+  &_type {
+    &-radio, &-checkbox {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      align-items: baseline;
+      .input__label {
+        margin-bottom: 0;
+      }
+      .input__control {
+        order: 1;
+      }
+    }
+  }
   @media (max-width: 700px) {
     max-width: 100%;
   }
@@ -36,9 +49,6 @@
       background-color: $error-color;
       border-radius: 3px;
       width: max-content;
-      &:empty {
-        display: none;
-      }
       &::before {
         content: '';
         position: absolute;
@@ -54,8 +64,8 @@
     color: $error-color;
     margin-top: .25rem;
     padding-left: 1.5rem;
-    .error {
-
+    &:empty {
+      display: none;
     }
   }
 }

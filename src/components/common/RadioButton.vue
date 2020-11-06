@@ -78,19 +78,4 @@ export default {
 
 <style scoped lang="scss">
 @import "../../styles/input";
-
-.input {
-  &_type {
-    &-radio, &-checkbox {
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-    }
-  }
-
-  &__control {
-    &[type=checkbox], &[type=radio] {
-      order: 1
-    }
-  }
-}
 </style>
