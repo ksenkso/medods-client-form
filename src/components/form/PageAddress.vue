@@ -6,7 +6,7 @@
                    label="Индекс"></FormInput>
         <FormInput v-model.trim="$v.country.$model" name="country" id="country" label="Страна"></FormInput>
         <FormInput v-model.trim="$v.district.$model" name="district" id="district" label="Область"></FormInput>
-        <FormInput required :invalid="$v.city.$invalid" v-model.trim="$v.city.$model" name="city" id="city" label="Город">
+        <FormInput required :invalid="$v.city.$dirty && $v.city.$invalid" v-model.trim="$v.city.$model" name="city" id="city" label="Город">
           <template slot="errors">
             <li class="error" v-if="$v.city.$dirty && !$v.city.required">
               Это поле обязательно
@@ -23,7 +23,6 @@
 
 <script>
 import FormInput from "@/components/common/FormInput.vue";
-import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
 import {required} from "vuelidate/lib/validators";
 
@@ -32,7 +31,7 @@ export default {
   components: {
     FormInput
   },
-  mixins: [validationMixin, ClientFormPage],
+  mixins: [ClientFormPage],
   data() {
     return {
       index: '',

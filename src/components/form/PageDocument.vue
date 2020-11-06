@@ -48,7 +48,6 @@
 import FormInput from "@/components/common/FormInput.vue";
 import Select from "@/components/common/Select.vue";
 import {required} from "vuelidate/lib/validators";
-import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
 
 export default {
@@ -57,7 +56,7 @@ export default {
     FormInput,
     Select,
   },
-  mixins: [validationMixin, ClientFormPage],
+  mixins: [ClientFormPage],
   data() {
     return {
       type: 'passport',

@@ -90,7 +90,6 @@ import Checkbox from "@/components/common/Checkbox.vue";
 import MaskedInput from "@/components/common/MaskedInput.vue";
 import FormInput from "@/components/common/FormInput.vue";
 import {required} from "vuelidate/lib/validators";
-import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
 
 export default {
@@ -101,7 +100,7 @@ export default {
     MaskedInput,
     FormInput
   },
-  mixins: [validationMixin, ClientFormPage],
+  mixins: [ClientFormPage],
   data() {
     return {
       lastName: '',

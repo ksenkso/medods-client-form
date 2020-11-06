@@ -26,7 +26,6 @@
 import Select from "@/components/common/Select.vue";
 import Button from "@/components/common/Button.vue";
 import Checkbox from "@/components/common/Checkbox.vue";
-import {validationMixin} from "vuelidate";
 import ClientFormPage from "@/mixins/ClientFormPage.js";
 
 export default {
@@ -36,7 +35,7 @@ export default {
     Button,
     Checkbox
   },
-  mixins: [validationMixin, ClientFormPage],
+  mixins: [ClientFormPage],
   data() {
     return {
       group: [],

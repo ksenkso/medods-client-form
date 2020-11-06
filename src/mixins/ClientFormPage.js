@@ -1,7 +1,13 @@
+import {validationMixin} from "vuelidate/src";
+
 export default {
+    mixins: [validationMixin],
     methods: {
-        getErrors() {
+        getValidator() {
             return this.$v;
+        },
+        reset() {
+            Object.assign(this.$data, this.$options.data.call(this));
         }
     },
     props: {
