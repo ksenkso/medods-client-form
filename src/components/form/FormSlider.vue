@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       page: 0,
-      width: 0,
+      height: 'auto',
     }
   },
   props: {
@@ -86,7 +86,7 @@ export default {
         .focus();
     },
     updateHeight() {
-      this.height = this.$slots.default[this.page].componentInstance.$el.clientHeight;
+      this.height = `${this.$slots.default[this.page].componentInstance.$el.clientHeight}px`;
     },
 
   },
@@ -99,7 +99,7 @@ export default {
         transform: `translateX(-${this.page * 100}%)`,
       }
       if (this.adaptiveHeight) {
-        style.height = `${this.height}px`;
+        style.height = this.height;
       }
       return style;
     },
@@ -107,7 +107,7 @@ export default {
   mounted() {
     this.updateHeight();
     this.reactivateFocus();
-    window.addEventListener('resize', this.updateWidth);
+    window.addEventListener('resize', this.updateHeight);
   }
 }
 </script>
