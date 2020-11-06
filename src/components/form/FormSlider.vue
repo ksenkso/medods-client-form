@@ -81,9 +81,18 @@ export default {
     },
     focusFirst() {
       // we cannot control where in the dom the first component will be, so we need to use DOM API to focus on it
-      this.$slots.default[this.page].componentInstance.$el.querySelectorAll('input, a, button, select')
-        .item(0)
-        .focus();
+      // if there is an error on the page, focus on it instead of focusing on the first input
+      const v = this.$slots.default[this.page].componentInstance.getErrors();
+      if (v.$anyError) {
+        this.$slots.default[this.page].componentInstance.$el.querySelectorAll('.input_invalid .input__control')
+            .item(0)
+            .focus();
+      } else {
+        this.$slots.default[this.page].componentInstance.$el.querySelectorAll('input, a, button, select')
+            .item(0)
+            .focus();
+      }
+
     },
     updateHeight() {
       this.height = `${this.$slots.default[this.page].componentInstance.$el.clientHeight}px`;
@@ -117,6 +126,7 @@ export default {
 
 .form-slider {
   width: 100%;
+
   &__nav {
     margin-top: 1rem;
     display: flex;

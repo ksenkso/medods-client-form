@@ -19,16 +19,26 @@
           <FormInput v-model.trim="$v.number.$model" name="doc-number" id="doc-number"
                      label="Номер"></FormInput>
         </div>
-        <FormInput required v-model="$v.issueDate.$model" type="date" name="issue-date" id="issue-date"
-                   label="Когда выдан">
+        <FormInput
+            required
+            :invalid="$v.issueDate.$dirty && $v.issueDate.$invalid"
+            v-model="$v.issueDate.$model"
+            type="date"
+            name="issue-date"
+            id="issue-date"
+            label="Когда выдан">
           <template slot="errors">
             <li class="error" v-if="$v.issueDate.$dirty && !$v.issueDate.required">Это поле
               обязательно
             </li>
           </template>
         </FormInput>
-        <FormInput v-model.trim="$v.issuedAt.$model" name="issued-at" id="issued-at"
-                   label="Кем выдан"></FormInput>
+        <FormInput
+            v-model.trim="$v.issuedAt.$model"
+            name="issued-at"
+            id="issued-at"
+            label="Кем выдан">
+        </FormInput>
       </div>
     </div>
   </div>
@@ -80,6 +90,7 @@ export default {
 @media (min-width: 700px) {
   .input-group {
     width: 60%;
+
     .input {
       max-width: 100%;
     }

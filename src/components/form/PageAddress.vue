@@ -6,7 +6,7 @@
                    label="Индекс"></FormInput>
         <FormInput v-model.trim="$v.country.$model" name="country" id="country" label="Страна"></FormInput>
         <FormInput v-model.trim="$v.district.$model" name="district" id="district" label="Область"></FormInput>
-        <FormInput required v-model.trim="$v.city.$model" name="city" id="city" label="Город">
+        <FormInput required :invalid="$v.city.$invalid" v-model.trim="$v.city.$model" name="city" id="city" label="Город">
           <template slot="errors">
             <li class="error" v-if="$v.city.$dirty && !$v.city.required">
               Это поле обязательно

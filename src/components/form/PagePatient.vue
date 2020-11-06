@@ -4,6 +4,7 @@
       <div class="input-group">
         <FormInput
             required
+            :invalid="$v.lastName.$dirty && $v.lastName.$invalid"
             :value="$v.lastName.$model"
             @change="$v.lastName.$model = $event.trim()"
             name="last-name"
@@ -15,6 +16,7 @@
         </FormInput>
         <FormInput
             required
+            :invalid="$v.firstName.$dirty && $v.firstName.$invalid"
             :value="$v.firstName.$model"
             @change="$v.firstName.$model = $event.trim()"
             name="first-name" id="first-name"
@@ -28,6 +30,7 @@
                    label="Отчество (если есть)"></FormInput>
         <FormInput
             required
+            :invalid="$v.dateOfBirth.$dirty && $v.dateOfBirth.$invalid"
             v-model="$v.dateOfBirth.$model"
             name="date-of-birth"
             type="date" id="date-of-birth"
@@ -44,6 +47,7 @@
             required
             hint="В формате 7(xxx)xxx-xx-xx"
             mask="7(___)___-__-__"
+            :invalid="$v.phone.$dirty && $v.phone.$invalid"
             @change="$v.phone.$model = $event.trim()"
             @blur="$v.phone.$touch()"
             :value="$v.phone.$model"

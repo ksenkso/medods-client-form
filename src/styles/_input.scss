@@ -26,6 +26,9 @@
       }
     }
   }
+  &_invalid {
+    color: $error-color;
+  }
   &_type {
     &-radio, &-checkbox {
       flex-direction: row-reverse;

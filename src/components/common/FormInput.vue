@@ -47,6 +47,9 @@ export default {
     value: {},
     hint: {
       type: String,
+    },
+    invalid: {
+      type: Boolean,
     }
   },
   computed: {
@@ -57,7 +60,7 @@ export default {
       return ['input__label', this.required && 'input__label_required'];
     },
     inputClassName() {
-      return ['input', `input_type-${this.type}`]
+      return ['input', `input_type-${this.type}`, this.invalid && 'input_invalid']
     }
   },
 }

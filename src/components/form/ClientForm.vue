@@ -73,10 +73,15 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.pages.map(page => {
+      for (let i = 0; i < this.$refs.pages.length; i++) {
+        const page = this.$refs.pages[i];
         const v = page.getErrors();
         v.$touch();
-      })
+        if (v.$anyError) {
+          this.$refs.slider.navigate(i);
+          break;
+        }
+      }
     },
     onSlideChange(index) {
       const v = this.$refs.pages[this.page].getErrors();
