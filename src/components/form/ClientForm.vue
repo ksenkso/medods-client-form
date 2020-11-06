@@ -61,10 +61,10 @@ export default {
     return {
       page: 0,
       steps: [
-          'Пациент',
-          'Адрес',
-          'Документ',
-          'Прочее'
+        'Пациент',
+        'Адрес',
+        'Документ',
+        'Прочее'
       ],
       pages: [PagePatient, PageAddress, PageDocument, PageMedical],
       errors: new Set(),
@@ -108,26 +108,22 @@ export default {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
 
   &__header {
-    padding-left: 3.5rem;
+    h1 {
+      padding-left: 3.5rem;
+      @media (max-width: 700px) {
+        padding-left: 0;
+      }
+    }
   }
 
   &__page {
-    flex: 1 0 100%
+    flex: 1 0 100%;
+
   }
 
   &__footer {
     display: flex;
     justify-content: flex-end;
-  }
-
-  @media (max-width: 800px) {
-    .row {
-      flex-direction: column;
-
-      .input {
-        max-width: 100%;
-      }
-    }
   }
 
   &__page {
