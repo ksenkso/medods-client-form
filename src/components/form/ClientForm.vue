@@ -3,9 +3,15 @@
     <div class="client-form__header">
       <h1>Добавление клиента</h1>
     </div>
+    <FormProgress
+        @navigate="navigate"
+        :steps="steps"
+        :active="page"
+        :errors="errors"
+        :valid="valid"></FormProgress>
     <div class="client-form__content">
       <form action="#" @submit.prevent="onSubmit" novalidate>
-        <FormSlider @slide-change="onSlideChange">
+        <FormSlider ref="slider" @slide-change="onSlideChange" adaptive-height>
           <component
               ref="pages"
               v-for="(component, index) in pages"
@@ -23,7 +29,6 @@
 <script>
 import FormInput from '@/components/common/FormInput.vue';
 import {validationMixin} from 'vuelidate';
-import {required} from 'vuelidate/lib/validators';
 import Select from '@/components/common/Select.vue';
 import Checkbox from '@/components/common/Checkbox.vue';
 import RadioButton from '@/components/common/RadioButton.vue';
@@ -34,10 +39,12 @@ import PagePatient from "@/components/form/PagePatient.vue";
 import PageAddress from "@/components/form/PageAddress.vue";
 import PageDocument from "@/components/form/PageDocument.vue";
 import PageMedical from "@/components/form/PageMedical.vue";
+import FormProgress from "@/components/form/FormProgress.vue";
 
 export default {
   name: 'ClientForm',
   components: {
+    FormProgress,
     FormInput,
     Select,
     Checkbox,
@@ -54,44 +61,15 @@ export default {
   data() {
     return {
       page: 0,
-      person: {
-        lastName: '',
-        firstName: '',
-        patronymic: '',
-        dateOfBirth: '',
-        phone: '',
-        sex: '',
-      },
-      medical: {
-        group: [],
-        doctor: null,
-      },
-      address: {
-        index: '',
-        country: '',
-        district: '',
-        city: '',
-        street: '',
-        house: '',
-      },
-      document: {
-        type: 'passport',
-        serial: '',
-        issuedAt: '',
-        issueDate: '',
-      },
-      noSMS: false,
-      documentTypes: [
-        {value: 'passport', text: 'Паспорт'},
-        {value: 'birth-certificate', text: 'Свидетельство о рождении'},
-        {value: 'driver-license', text: 'Вод. удостоверение'},
+      steps: [
+          'Пациент',
+          'Адрес',
+          'Документ',
+          'Прочее'
       ],
-      doctors: [
-        {value: '1', text: 'Иванов'},
-        {value: '2', text: 'Захаров'},
-        {value: '3', text: 'Чернышева'},
-      ],
-      pages: [PagePatient, PageAddress, PageDocument, PageMedical]
+      pages: [PagePatient, PageAddress, PageDocument, PageMedical],
+      errors: new Set(),
+      valid: new Set(),
     }
   },
   methods: {
@@ -102,59 +80,21 @@ export default {
       })
     },
     onSlideChange(index) {
+      const v = this.$refs.pages[this.page].getErrors();
+      console.log(v.$anyError, v.$invalid);
+      if (v.$anyError) {
+        this.valid.delete(this.page);
+        this.errors.add(this.page);
+      } else {
+        this.errors.delete(this.page);
+        this.valid.add(this.page);
+      }
       this.page = index;
+    },
+    navigate(index) {
+      this.$refs.slider.navigate(index);
     }
-  },
-  validations: {
-    person: {
-      firstName: {
-        required,
-      },
-      lastName: {
-        required,
-      },
-      patronymic: {},
-      dateOfBirth: {
-        required,
-      },
-      phone: {
-        required,
-        startsWithSeven: (value) => value.startsWith('7'),
-        length: (value) => value.length === 15, // 11 digits + 2 parens + 2 minuses
-      },
-      sex: {},
-    },
-    medical: {
-      group: {
-        required,
-      },
-      doctor: {},
-    },
-    address: {
-      index: {},
-      country: {},
-      district: {},
-      city: {
-        required,
-      },
-      street: {},
-      house: {},
-    },
-    document: {
-      type: {
-        required,
-      },
-      issueDate: {
-        required,
-      },
-      issuedAt: {},
-      serial: {
-        hasSpace: (value) => value.indexOf(' ') > -1,
-      },
-    },
-    noSMS: {},
-    test: {}
-  },
+  }
 }
 </script>
 
