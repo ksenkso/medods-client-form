@@ -95,7 +95,6 @@ export default {
   },
   watch: {
     value(newValue) {
-      console.log(newValue)
       this.maskedValue = applyMask(newValue, this.mask);
     }
   }
