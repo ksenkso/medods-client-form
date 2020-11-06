@@ -1,7 +1,7 @@
 <template>
   <div class="client-form">
     <div class="client-form__header">
-      <h1>Добавление клиента</h1>
+      <h1>{{title}}</h1>
     </div>
     <div class="client-form__main">
       <FormProgress
@@ -12,7 +12,7 @@
           :valid="valid"></FormProgress>
       <div class="client-form__content">
         <form ref="form" action="#" @submit.prevent="onSubmit" novalidate>
-          <FormSlider ref="slider" @slide-change="onSlideChange" adaptive-height :show-navigation="!hideNavigation">
+          <FormSlider ref="slider" @slide-change="onSlideChange" adaptive-height :show-navigation="!formSubmitted">
             <component
                 ref="pages"
                 v-for="(component, index) in pages"
@@ -76,7 +76,7 @@ export default {
       pages: [PagePatient, PageAddress, PageDocument, PageMedical],
       errors: new Set(),
       valid: new Set(),
-      hideNavigation: false,
+      formSubmitted: false,
     }
   },
   methods: {
@@ -93,7 +93,7 @@ export default {
         }
       }
       if (valid) {
-        this.hideNavigation = true;
+        this.formSubmitted = true;
         this.$refs.slider.toSuccessPage();
       }
     },
@@ -114,7 +114,7 @@ export default {
     },
     resetForm() {
       this.page = 0;
-      this.hideNavigation = false;
+      this.formSubmitted = false;
       this.errors = new Set();
       this.valid = new Set();
       this.$refs.pages.forEach(page => {
@@ -122,6 +122,11 @@ export default {
       })
       this.$refs.form.reset();
       this.$refs.slider.reset();
+    }
+  },
+  computed: {
+    title() {
+      return this.formSubmitted ? 'Клиент добавлен!' : 'Добавление клиента';
     }
   }
 }
@@ -159,12 +164,7 @@ export default {
   }
 
   &__header {
-    h1 {
-      padding-left: 3.5rem;
-      @media (max-width: 700px) {
-        padding-left: 0;
-      }
-    }
+    text-align: center;
   }
 
   &__page {

@@ -1,6 +1,5 @@
 <template>
   <div class="client-form__success">
-    Клиент добавлен!
     <Button @click="$emit('reset')">Добавить нового клиента</Button>
   </div>
 </template>
