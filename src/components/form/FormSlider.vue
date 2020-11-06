@@ -1,11 +1,14 @@
 <template>
   <div class="form-slider">
     <div ref="content" class="form-slider__content">
-      <div class="form-slider__inner" :style="contentStyle" @transitionend="focusFirst">
+      <div ref="inner" class="form-slider__inner" :style="contentStyle" @transitionend="focusFirst">
         <slot></slot>
+        <div :class="successPageClass">
+          <slot name="success-page"></slot>
+        </div>
       </div>
     </div>
-    <div class="form-slider__nav">
+    <div class="form-slider__nav" v-if="showNavigation">
       <Button
           :disabled="page === 0"
           class="form-slider__button form-slider__button_prev"
@@ -32,35 +35,54 @@ export default {
     return {
       page: 0,
       height: 'auto',
+      showSuccessPage: false,
     }
   },
   props: {
     adaptiveHeight: Boolean,
+    showNavigation: Boolean,
   },
   methods: {
     movePage(amount) {
       const nextPage = this.page + amount;
       this.navigate(nextPage);
     },
+    toSuccessPage() {
+      this.showSuccessPage = true;
+      this.navigateUnsafe(this.pagesCount);
+    },
+    reset() {
+      this.showSuccessPage = false;
+      this.$slots.default.forEach(vNode => {
+        const v = vNode.componentInstance.getValidator();
+        v.$reset();
+      });
+      this.navigate(0);
+    },
+    /**
+     * 1. touch fields on current page
+     * 2. wait for layout shifts
+     * 3. update slide width
+     * 4. go to the next slide
+     */
     navigate(index) {
-      if (this.validIndex(index)) {
-        const v = this.$slots.default[this.page].componentInstance.getErrors();
-        /**
-         * 1. touch fields
-         * 2. wait for layout shifts
-         * 3. update slide width
-         * 4. go to the next slide
-         */
+      if (this.validIndex(this.page)) {
+        const v = this.$slots.default[this.page].componentInstance.getValidator();
         v.$touch();
-        this.$nextTick(() => {
-          this.page = index;
-          if (this.adaptiveHeight) {
-            this.updateHeight();
-          }
-          this.reactivateFocus();
-          this.$emit('slide-change', this.page);
-        });
       }
+      if (this.validIndex(index)) {
+        this.navigateUnsafe(index)
+      }
+    },
+    navigateUnsafe(index) {
+      this.$nextTick(() => {
+        this.page = index;
+        if (this.adaptiveHeight) {
+          this.updateHeight();
+        }
+        this.reactivateFocus();
+        this.$emit('slide-change', this.page);
+      });
     },
     validIndex(index) {
       return index >= 0 && index < this.pagesCount
@@ -82,20 +104,21 @@ export default {
     focusFirst() {
       // we cannot control where in the dom the first component will be, so we need to use DOM API to focus on it
       // if there is an error on the page, focus on it instead of focusing on the first input
-      const v = this.$slots.default[this.page].componentInstance.getErrors();
-      if (v.$anyError) {
-        this.$slots.default[this.page].componentInstance.$el.querySelectorAll('.input_invalid .input__control')
-            .item(0)
-            .focus();
-      } else {
-        this.$slots.default[this.page].componentInstance.$el.querySelectorAll('input, a, button, select')
-            .item(0)
-            .focus();
+      if (this.validIndex(this.page)) {
+        const v = this.$slots.default[this.page].componentInstance.getValidator();
+        if (v.$anyError) {
+          this.$slots.default[this.page].componentInstance.$el.querySelectorAll('.input_invalid .input__control')
+              .item(0)
+              .focus();
+        } else {
+          this.$slots.default[this.page].componentInstance.$el.querySelectorAll('input, a, button, select')
+              .item(0)
+              .focus();
+        }
       }
-
     },
     updateHeight() {
-      this.height = `${this.$slots.default[this.page].componentInstance.$el.clientHeight}px`;
+      this.height = `${this.$refs.inner.children.item(this.page).clientHeight}px`;
     },
 
   },
@@ -112,6 +135,9 @@ export default {
       }
       return style;
     },
+    successPageClass() {
+      return ['client-form__page', 'success-page', this.showSuccessPage && 'success-page_visible'];
+    }
   },
   mounted() {
     this.updateHeight();
@@ -163,6 +189,12 @@ export default {
     &:focus, &:active {
       outline: none;
       background-color: lighten($primary-color, 10%);
+    }
+  }
+  .success-page {
+    visibility: hidden;
+    &_visible {
+      visibility: visible;
     }
   }
 }
