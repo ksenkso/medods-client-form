@@ -85,11 +85,7 @@ export default {
       height: 10px;
       background-color: #ccc;
       border-radius: 50%;
-    }
-    &_active {
-      &::after {
-        background: transparentize($primary-color, .3);
-      }
+      transition: background-color .1s ease-in-out;
     }
     &_valid {
       &::after {
@@ -99,6 +95,11 @@ export default {
     &_error {
       &::after {
         background: transparentize($error-color, .3);
+      }
+    }
+    &_active {
+      &::after {
+        background: transparentize($primary-color, .3);
       }
     }
   }
