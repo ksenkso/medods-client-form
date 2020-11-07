@@ -30,6 +30,19 @@ export default {
     doctor() {
       return this.data.doctor ? this.medical.doctors[this.data.doctor] : '';
     }
+  },
+  watch: {
+    medical: {
+      handler(medical) {
+        console.log(medical);
+        if (medical.groupsLoaded && medical.doctorsLoaded) {
+          this.$nextTick(() => {
+            this.$emit('ready');
+          })
+        }
+      },
+      deep: true,
+    }
   }
 }
 </script>

@@ -75,14 +75,43 @@ export default {
       }
     },
     navigateUnsafe(index) {
+      let shouldUpdateHeight = true;
+      if (this.adaptiveHeight) {
+        const page = this.getPage(index);
+        if (page && page.$data.async) {
+          shouldUpdateHeight = false;
+          let resolveReady;
+          let ready = new Promise(resolve => {
+            resolveReady = resolve;
+          });
+          page.$on('ready', resolveReady);
+          ready.then(() => {
+            page.$off('ready', resolveReady);
+            this.$nextTick(() => {
+              this.updateHeight();
+            })
+          });
+        }
+      }
       this.$nextTick(() => {
+
         this.page = index;
-        if (this.adaptiveHeight) {
+        if (shouldUpdateHeight && this.adaptiveHeight) {
           this.updateHeight();
         }
         this.reactivateFocus();
         this.$emit('slide-change', this.page);
       });
+
+    },
+    getPage(index) {
+      if (this.validIndex(index)) {
+        return this.$slots.default[index].componentInstance;
+      } else {
+        if (index === this.pagesCount) {
+          return this.$slots['success-page'][0].componentInstance;
+        }
+      }
     },
     validIndex(index) {
       return index >= 0 && index < this.pagesCount
@@ -116,6 +145,7 @@ export default {
               .focus();
         }
       }
+      this.height = 'auto';
     },
     updateHeight() {
       this.height = `${this.$refs.inner.children.item(this.page).clientHeight}px`;
@@ -191,8 +221,10 @@ export default {
       background-color: lighten($primary-color, 10%);
     }
   }
+
   .success-page {
     visibility: hidden;
+
     &_visible {
       visibility: visible;
     }

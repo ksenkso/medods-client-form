@@ -4,7 +4,7 @@
       <PatientView v-if="data.PagePatient" :data="data.PagePatient"></PatientView>
       <AddressView v-if="data.PageAddress" :data="data.PageAddress"></AddressView>
       <DocumentView v-if="data.PageDocument" :data="data.PageDocument"></DocumentView>
-      <AdditionalInfoView v-if="data.PageMedical" :data="data.PageMedical"></AdditionalInfoView>
+      <AdditionalInfoView @ready="$emit('ready')" v-if="data.PageMedical" :data="data.PageMedical"></AdditionalInfoView>
     </div>
     <Button @click="$emit('reset')">Добавить нового клиента</Button>
   </div>
@@ -29,7 +29,12 @@ export default {
   props: {
     data: {
       type: Object,
-      required: true
+      required: true,
+    }
+  },
+  data() {
+    return {
+      async: true,
     }
   }
 }
