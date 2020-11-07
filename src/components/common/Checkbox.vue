@@ -4,7 +4,7 @@
       {{ label }}
     </label>
     <input @change="onChange" :value="value" type="checkbox" :name="name" :id="id"
-           :required="required" :class="inputClassName" :checked="isChecked">
+           :required="required" :class="inputClassName" :checked="isChecked" v-bind="$attrs">
     <ul class="input__errors">
       <slot name="errors"></slot>
     </ul>

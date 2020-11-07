@@ -3,10 +3,11 @@
     <label :for="id" :class="labelClassName">
       {{ label }}
     </label>
-    <select :value="value" :name="name" :id="id" @change="$emit('change', $event.target.value)" :class="className">
+    <select :value="value" :name="name" :id="id" @change="$emit('change', $event.target.value)" :class="className"
+            v-bind="$attrs">
       <option v-for="(option, i) in options" :key="i" :value="option.value">{{ option.text }}</option>
     </select>
-    <div class="input__hint">{{hint}}</div>
+    <div class="input__hint">{{ hint }}</div>
     <ul class="input__errors">
       <slot name="errors"></slot>
     </ul>
@@ -58,6 +59,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../styles/input";
+
 .input {
   &__control {
     height: 30px;
