@@ -27,7 +27,7 @@ import ClientFormPage from "@/mixins/ClientFormPage.js";
 import {required} from "vuelidate/lib/validators";
 
 export default {
-  name: "PageTwo",
+  name: "PageAddress",
   components: {
     FormInput
   },
