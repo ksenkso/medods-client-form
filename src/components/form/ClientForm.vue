@@ -21,7 +21,7 @@
                 :active="page === index">
             </component>
             <template slot="success-page">
-              <FormSuccess @reset="resetForm"></FormSuccess>
+              <FormSuccess :data="formData" @reset="resetForm"></FormSuccess>
             </template>
           </FormSlider>
         </form>
@@ -39,10 +39,10 @@ import RadioButton from '@/components/common/RadioButton.vue';
 import MaskedInput from '@/components/common/MaskedInput.vue';
 import Button from "@/components/common/Button.vue";
 import FormSlider from "@/components/form/FormSlider.vue";
-import PagePatient from "@/components/form/PagePatient.vue";
-import PageAddress from "@/components/form/PageAddress.vue";
-import PageDocument from "@/components/form/PageDocument.vue";
-import PageMedical from "@/components/form/PageMedical.vue";
+import PagePatient from "@/components/form/pages/PagePatient.vue";
+import PageAddress from "@/components/form/pages/PageAddress.vue";
+import PageDocument from "@/components/form/pages/PageDocument.vue";
+import PageMedical from "@/components/form/pages/PageMedical.vue";
 import FormProgress from "@/components/form/FormProgress.vue";
 import FormSuccess from "@/components/form/FormSuccess.vue";
 
@@ -77,6 +77,7 @@ export default {
       errors: new Set(),
       valid: new Set(),
       formSubmitted: false,
+      formData: {},
     }
   },
   methods: {
@@ -93,6 +94,10 @@ export default {
         }
       }
       if (valid) {
+        this.formData = this.$refs.pages.reduce((acc, page) => {
+          acc[page.$options.name] = page.getData();
+          return acc;
+        }, {});
         this.formSubmitted = true;
         this.$refs.slider.toSuccessPage();
       }
