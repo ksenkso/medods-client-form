@@ -282,7 +282,7 @@ export default {
     }
 
     &_error {
-      stroke: lighten($error-color, 10%);
+      stroke: $error-color;
     }
   }
   &__mask {

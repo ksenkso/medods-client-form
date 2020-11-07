@@ -35,6 +35,7 @@ export default {
   padding: .6em 1.2em;
   color: #ffffff;
   font-size: 1rem;
+  transition: background-color .3s ease-in-out;
   &:disabled {
     background-color: lighten($primary-color, 30%);
   }
@@ -42,7 +43,7 @@ export default {
   &:focus, &:active {
     outline: 2px revert $primary-color;
     outline-offset: 2px;
-    background-color: darken($primary-color, 10%);
+    background-color: lighten($primary-color, 10%);
   }
 }
 </style>
