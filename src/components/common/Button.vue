@@ -32,9 +32,17 @@ export default {
   cursor: pointer;
   background-color: $primary-color;
   border-radius: 3px;
-  outline-color: transparentize($primary-color, .3);
   padding: .6em 1.2em;
   color: #ffffff;
   font-size: 1rem;
+  &:disabled {
+    background-color: lighten($primary-color, 30%);
+  }
+
+  &:focus, &:active {
+    outline: 2px revert $primary-color;
+    outline-offset: 2px;
+    background-color: darken($primary-color, 10%);
+  }
 }
 </style>

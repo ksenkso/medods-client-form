@@ -205,21 +205,7 @@ export default {
   }
 
   &__button {
-    cursor: pointer;
-    background-color: $primary-color;
-    color: #ffffff;
     font-weight: bold;
-    border: none;
-    font-size: 1rem;
-
-    &:disabled {
-      background-color: lighten($primary-color, 30%);
-    }
-
-    &:focus, &:active {
-      outline: none;
-      background-color: lighten($primary-color, 10%);
-    }
   }
 
   .success-page {
