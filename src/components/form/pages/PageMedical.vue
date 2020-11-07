@@ -13,12 +13,6 @@
             id="group-vip"
             :label="text">
         </Checkbox>
-<!--        <Checkbox v-model="$v.group.$model" value="vip" name="medical-group" id="group-vip"-->
-<!--                  label="VIP"></Checkbox>-->
-<!--        <Checkbox v-model="$v.group.$model" value="problem" name="medical-group" id="group-problem"-->
-<!--                  label="Проблемные"></Checkbox>-->
-<!--        <Checkbox v-model="$v.group.$model" value="oms" name="medical-group" id="group-oms"-->
-<!--                  label="ОМС"></Checkbox>-->
       </div>
       <Select
           tabindex="-1"
