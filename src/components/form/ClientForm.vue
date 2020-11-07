@@ -12,7 +12,7 @@
           :valid="valid"></FormProgress>
       <div class="client-form__content">
         <form ref="form" action="#" @submit.prevent="onSubmit" novalidate>
-          <FormSlider ref="slider" @slide-change="onSlideChange" adaptive-height :show-navigation="!formSubmitted">
+          <FormSlider ref="slider" @slide-change="onSlideChange" :show-navigation="!formSubmitted">
             <component
                 ref="pages"
                 v-for="(component, index) in pages"
@@ -71,7 +71,7 @@ export default {
         'Пациент',
         'Адрес',
         'Документ',
-        'Прочее'
+        'Дополнительно'
       ],
       pages: [PagePatient, PageAddress, PageDocument, PageMedical],
       errors: new Set(),
