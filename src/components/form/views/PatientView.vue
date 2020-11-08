@@ -3,7 +3,7 @@
     <h2>Пациент</h2>
     <ResultField label="ФИО" :value="fio"></ResultField>
     <ResultField label="Телефон" :value="data.phone"></ResultField>
-    <ResultField label="Не отправлять СМС" checkbox></ResultField>
+    <ResultField label="Не отправлять СМС" checkbox v-if="data.noSMS"></ResultField>
     <ResultField label="Дата рождения" :value="data.dateOfBirth"></ResultField>
     <ResultField label="Пол" :value="sex"></ResultField>
   </div>
