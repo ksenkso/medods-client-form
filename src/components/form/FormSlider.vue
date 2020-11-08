@@ -125,7 +125,7 @@ export default {
           })
         } else {
           controls.forEach(control => {
-            control.tabIndex = 1;
+            control.tabIndex = 0;
           });
         }
       })
