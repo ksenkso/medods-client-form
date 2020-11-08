@@ -15,7 +15,10 @@
     box-sizing: border-box;
     font-size: 1rem;
     padding: 3px;
-
+    &:not(.input__control_select) {
+      border: 1px solid black;
+      border-radius: 3px;
+    }
     &:focus {
       @include outline;
     }

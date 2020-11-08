@@ -63,7 +63,9 @@ export default {
 
 .input {
   &__control {
-    height: 30px;
+    &_select {
+      min-height: 30px;
+    }
   }
 }
 </style>
