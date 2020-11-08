@@ -15,6 +15,7 @@
 <script>
 export default {
   name: 'Checkbox',
+  inheritAttrs: false,
   model: {
     prop: 'checked',
     event: 'change',

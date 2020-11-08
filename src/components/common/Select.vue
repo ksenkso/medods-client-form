@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'Select',
+  inheritAttrs: false,
   model: {
     prop: 'value',
     event: 'change',

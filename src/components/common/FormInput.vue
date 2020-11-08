@@ -25,6 +25,7 @@
 <script>
 export default {
   name: 'FormInput',
+  inheritAttrs: false,
   props: {
     type: {
       type: String,

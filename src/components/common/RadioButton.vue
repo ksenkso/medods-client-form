@@ -15,6 +15,7 @@
 <script>
 export default {
   name: 'RadioButton',
+  inheritAttrs: false,
   model: {
     prop: 'checked',
     event: 'change'
