@@ -8,9 +8,4 @@
 @mixin outline($offset: 3px) {
   outline: 2px solid $primary-color;
   outline-offset: 1px;
-  @supports (outline-style: revert) {
-    outline-offset: $offset;
-    outline-style: revert;
-    outline-width: 1px;
-  }
 }
