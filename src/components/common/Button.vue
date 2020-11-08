@@ -27,6 +27,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../styles/variables";
+@import "../../styles/mixins";
 .button {
   border: none;
   cursor: pointer;
@@ -41,8 +42,7 @@ export default {
   }
 
   &:focus, &:active {
-    outline: 2px revert $primary-color;
-    outline-offset: 2px;
+    @include outline(2px);
     background-color: lighten($primary-color, 10%);
   }
 }
