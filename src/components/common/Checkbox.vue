@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     inputClassName() {
-      return ['input__control'];
+      return ['input__control', 'input__control_checkbox'];
     },
     labelClassName() {
       return ['input__label', this.required && 'input__label_required'];
@@ -81,5 +81,13 @@ export default {
 
 <style scoped lang="scss">
 @import "../../styles/input";
+.input {
+  &__control {
+    &_checkbox {
+      margin: 0 3px 0 0;
+      padding: 0;
 
+    }
+  }
+}
 </style>
