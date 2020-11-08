@@ -1,7 +1,7 @@
 <template>
   <div class="form-slider">
     <div ref="content" class="form-slider__content">
-      <div ref="inner" class="form-slider__inner" :style="contentStyle" @transitionend="focusFirst">
+      <div ref="inner" class="form-slider__inner" :style="contentStyle" @transitionend.self="focusFirst">
         <slot></slot>
         <div :class="successPageClass">
           <slot name="success-page"></slot>
