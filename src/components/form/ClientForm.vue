@@ -174,7 +174,7 @@ export default {
 
   &__page {
     flex: 1 0 100%;
-
+    padding: 0 3px;
   }
 
   &__footer {
