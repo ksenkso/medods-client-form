@@ -3,13 +3,14 @@
     <h2>Документ</h2>
     <ResultField label="Тип документа" :value="documentType"></ResultField>
     <ResultField label="Кем выдан" :value="data.issuedAt"></ResultField>
-    <ResultField label="Когда выдан" :value="data.issueDate"></ResultField>
+    <ResultField label="Когда выдан" :value="issueDate"></ResultField>
     <ResultField label="Серия и номер" :value="id"></ResultField>
   </div>
 </template>
 
 <script>
 import ResultField from "@/components/form/views/ResultField.vue";
+import {formatDate} from "@/utils.js";
 export default {
   name: "DocumentView",
   components: {ResultField},
@@ -38,6 +39,9 @@ export default {
           return '';
         }
       }
+    },
+    issueDate() {
+      return this.data.issueDate ? formatDate(this.data.issueDate) : 'Не указано';
     }
   }
 }
