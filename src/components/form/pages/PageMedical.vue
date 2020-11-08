@@ -10,7 +10,7 @@
             :key="value"
             :value="value"
             name="medical-group"
-            id="group-vip"
+            :id="`group-${value}`"
             :label="text">
         </Checkbox>
       </div>
