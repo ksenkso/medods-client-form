@@ -98,6 +98,7 @@ export default {
           acc[page.$options.name] = page.getData();
           return acc;
         }, {});
+        // here we can send the data to the server (requires to add a loader)
         this.formSubmitted = true;
         this.$refs.slider.toSuccessPage();
       }
